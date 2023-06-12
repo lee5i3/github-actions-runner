@@ -5,6 +5,8 @@ on:
     paths:
       - Dockerfile
       - start.sh
+  workflow_dispatch:    
+
 jobs:
   push-image:
     runs-on: ubuntu-latest
