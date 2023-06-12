@@ -13,15 +13,14 @@ env:
   REGISTRY: ghcr.io
   IMAGE_NAME: ${{ github.repository }}
 
-permissions:
-  packages: write
-
 jobs:
   push-image:
     runs-on: ubuntu-latest
+    
     permissions:
+      contents: read
       packages: write
-      contents: read    
+
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
@@ -35,15 +34,14 @@ jobs:
 
       - name: Docker meta
         id: meta
-        uses: docker/metadata-action@v4
+        uses: docker/metadata-action@9ec57ed1fcdbf14dcef7dfbe97b2010124a938b7
         with:
-          images: |
-            ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
+          images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
           tags: |
             type=raw,value=latest
 
       - name: Build and push
-        uses: docker/build-push-action@v4
+        uses: docker/build-push-action@f2a1d5e99d037542a71f64918e516c093c6f3fc4
         with:
           context: .
           push: true
