@@ -2,10 +2,9 @@ name: Deploy Image to GHCR
 
 on:
   push:
-    branches:
-      - main
-  workflow_dispatch:
-
+    paths:
+      - Dockerfile
+      - start.sh
 jobs:
   push-image:
     runs-on: ubuntu-latest
@@ -18,7 +17,7 @@ jobs:
         with:
           registry: ghcr.io
           username: ${{github.actor}}
-          password: ${{secrets.GITHUB_TOKEN}}
+          password: ${{secrets.GH_TOKEN}}
 
       - name: 'Build Inventory Image'
         run: |
